@@ -481,6 +481,239 @@ body {
   color: var(--accent-blue);
 }
 
+/* Game Speed Indicator */
+.game-speed {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--accent-blue);
+  background: var(--bg-dark);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.stat-card {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.text-blue { color: var(--accent-blue); }
+
+/* AI Cards */
+.ai-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ai-card {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.ai-stats {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  gap: 16px;
+}
+
+.text-right { text-align: right; }
+
+/* Galaxy Map */
+.galaxy-map {
+  min-height: 300px;
+}
+
+.ai-players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.ai-player-card {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.ai-player-card .ai-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.ai-player-card .ai-stats {
+  font-size: 11px;
+}
+
+/* Achievements */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.achievement-card {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.achievement-card.locked {
+  opacity: 0.6;
+}
+
+.achievement-card.unlocked {
+  border-color: var(--accent-green);
+  background: linear-gradient(180deg, rgba(0, 255, 136, 0.1) 0%, var(--bg-dark) 100%);
+}
+
+.achievement-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.achievement-name {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.achievement-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.achievement-progress {
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--accent-blue);
+  transition: width 0.3s ease;
+}
+
+/* Missions */
+.mission-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.mission-icon {
+  font-size: 32px;
+}
+
+.mission-info {
+  flex: 1;
+}
+
+.mission-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.mission-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.mission-reward {
+  font-family: var(--font-display);
+  font-size: 12px;
+}
+
+/* Settings */
+.setting-group {
+  margin-bottom: 20px;
+}
+
+.setting-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent-blue);
+}
+
+/* Difficulty Options */
+.difficulty-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.features-list ul {
+  color: var(--text-secondary);
+}
+
+.features-list li {
+  margin-bottom: 8px;
+}
+
 /* Footer */
 .game-footer {
   padding: 12px 20px;
