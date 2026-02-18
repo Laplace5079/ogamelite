@@ -8,12 +8,7 @@ import {
   AIPlanet,
   DEFAULT_AI_PERSONALITY 
 } from '../types/game-enhanced';
-import { Buildings, Ships, Defense, Resources } from '../types/game';
-import { 
-  BUILDING_COSTS, 
-  SHIP_COSTS, 
-  DEFENSE_COSTS 
-} from '../utils/constants';
+import { Buildings, Ships, Resources } from '../types/game';
 import { v4 as uuidv4 } from 'uuid';
 
 // Predefined AI names
@@ -233,7 +228,7 @@ export class AISystem {
   /**
    * AI decision making loop
    */
-  updateAI(ai: AIPlayer, deltaTime: number): AIAction[] {
+  updateAI(ai: AIPlayer, _deltaTime: number): AIAction[] {
     const actions: AIAction[] = [];
     const now = Date.now();
     const timeSinceLastAction = now - ai.lastAction;
@@ -398,6 +393,30 @@ export class AISystem {
 
     for (let i = 0; i < playerCount; i++) {
       const difficulty = difficulties[Math.floor(Math.random() * difficulties.length)];
+      const strategy = strategies[Math.floor(Math.random() * strategies.length)];
+      const existingNames = players.map(p => p.name);
+      
+      const ai = this.createAI(difficulty, strategy, existingNames);
+      players.push(ai);
+    }
+
+    return players;
+  }
+
+  /**
+   * Generate a universe with specified difficulty
+   */
+  generateUniverseWithDifficulty(playerCount: number = 10, baseDifficulty: AIDifficulty): AIPlayer[] {
+    const players: AIPlayer[] = [];
+    const strategies: AIStrategy[] = [AIStrategy.ECONOMIC, AIStrategy.MILITARY, AIStrategy.BALANCED];
+
+    for (let i = 0; i < playerCount; i++) {
+      // Higher difficulty = more higher difficulty AIs
+      let difficulty = baseDifficulty;
+      if (Math.random() > 0.5 && baseDifficulty < AIDifficulty.INSANE) {
+        difficulty = (baseDifficulty + 1) as AIDifficulty;
+      }
+      
       const strategy = strategies[Math.floor(Math.random() * strategies.length)];
       const existingNames = players.map(p => p.name);
       

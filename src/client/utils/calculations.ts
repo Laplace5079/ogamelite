@@ -4,7 +4,6 @@ import { Buildings, Ships, Defense, Research, Resources, ResourceRates } from '.
 import { 
   BUILDING_COSTS, 
   BUILDING_COST_MULTIPLIER, 
-  BUILDING_PRODUCTION,
   SHIP_COSTS,
   RESEARCH_COSTS,
   DEFENSE_COSTS,
@@ -37,6 +36,7 @@ export function getShipCost(ship: keyof Ships, count: number = 1): Resources {
     metal: base.metal * count,
     crystal: base.crystal * count,
     deuterium: base.deuterium * count,
+    energy: 0,
   };
 }
 
@@ -49,6 +49,7 @@ export function getDefenseCost(defense: keyof Defense, count: number = 1): Resou
     metal: base.metal * count,
     crystal: base.crystal * count,
     deuterium: base.deuterium * count,
+    energy: 0,
   };
 }
 
@@ -63,6 +64,7 @@ export function getResearchCost(research: keyof Research, level: number): Resour
     metal: Math.floor(base.metal * multiplier),
     crystal: Math.floor(base.crystal * multiplier),
     deuterium: Math.floor(base.deuterium * multiplier),
+    energy: 0,
   };
 }
 
@@ -124,7 +126,7 @@ export function calculateTravelTime(
   distance: number,
   speed: number,
   speedFactor: number = 1,
-  consumedFuel: number = 1
+  _consumedFuel: number = 1
 ): number {
   // OGame formula: time = (3500 / speed) * distance^2 / speedFactor
   const time = (3500 / speed) * Math.pow(distance, 2) / speedFactor;

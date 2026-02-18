@@ -1,6 +1,6 @@
 // Enhanced Game Types - Single Player with AI
 
-import { Resources, Buildings, Ships, Defense, Research, Planet } from './game';
+import { Resources, Buildings, Ships, Defense, Planet } from './game';
 
 // ==================== AI System ====================
 
@@ -210,13 +210,19 @@ export interface PlayerStats {
   researchCompleted: number;
   playTime: number;
   createdAt: number;
+  maxMetal: number;
+  maxCrystal: number;
+  maxDeuterium: number;
+  buildingsBuilt: number;
+  shipsDestroyed: number;
+  defensesWon: number;
 }
 
 // ==================== Main Game State ====================
 
 export interface GameState {
   // Core
-  player: Player;
+  player: AIPlayer;
   planets: Planet[];
   activePlanetId: string;
   
@@ -282,7 +288,13 @@ export const DEFAULT_STATS: PlayerStats = {
   planetsColonized: 0,
   researchCompleted: 0,
   playTime: 0,
-  createdAt: Date.now()
+  createdAt: Date.now(),
+  maxMetal: 0,
+  maxCrystal: 0,
+  maxDeuterium: 0,
+  buildingsBuilt: 0,
+  shipsDestroyed: 0,
+  defensesWon: 0
 };
 
 // ==================== Battle Formations ====================

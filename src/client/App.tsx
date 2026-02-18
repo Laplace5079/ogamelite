@@ -1,17 +1,16 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Planet, Resources, Ships, Defense, Buildings } from './types/game';
+import { Planet, Resources, Buildings } from './types/game';
 import { 
   GameSettings, 
   PlayerStats, 
   AIPlayer, 
   Achievement, 
-  DailyMission,
   AIDifficulty,
   DEFAULT_SETTINGS,
   DEFAULT_STATS
 } from './types/game-enhanced';
 import { formatNumber } from './utils/calculations';
-import { aiSystem, AIAction } from './services/ai-system';
+import { aiSystem } from './services/ai-system';
 import { ACHIEVEMENTS, checkAchievements, getAchievementProgress } from './services/achievements';
 
 // Initial planet data
@@ -51,42 +50,6 @@ const createInitialPlanet = (): Planet => ({
   lastUpdate: Date.now(),
 });
 
-const createSecondPlanet = (): Planet => ({
-  id: 'planet_2',
-  name: 'Colony Alpha',
-  coordinates: '1:1:8',
-  diameter: 10000,
-  fields: { used: 3, max: 163 },
-  resources: { metal: 200, crystal: 100, deuterium: 50, energy: 20 },
-  resourceRates: { metal: 15, crystal: 10, deuterium: 5, energy: 10 },
-  buildings: {
-    metalMine: 1,
-    crystalMine: 1,
-    deuteriumSynthesizer: 1,
-    solarPlant: 1,
-    fusionReactor: 0,
-    robotFactory: 0,
-    shipyard: 0,
-    researchLab: 0,
-    allianceHub: 0,
-    missileSilo: 0,
-    naniteFactory: 0,
-    terraformer: 0,
-    spaceDock: 0,
-  },
-  defense: {
-    rocketLauncher: 0,
-    lightLaser: 0,
-    heavyLaser: 0,
-    ionTurret: 0,
-    gaussCannon: 0,
-    plasmaTurret: 0,
-    shieldDome: 0,
-    missileDefense: 0,
-  },
-  lastUpdate: Date.now(),
-});
-
 type Page = 'overview' | 'buildings' | 'fleet' | 'defense' | 'research' | 'galaxy' | 'ai' | 'achievements' | 'missions' | 'settings';
 
 function App() {
@@ -103,7 +66,6 @@ function App() {
   // Achievements & Stats
   const [achievements, setAchievements] = useState<Achievement[]>([...ACHIEVEMENTS]);
   const [stats, setStats] = useState<PlayerStats>({ ...DEFAULT_STATS, createdAt: Date.now() });
-  const [dailyMissions, setDailyMissions] = useState<DailyMission[]>([]);
   
   // Settings
   const [settings, setSettings] = useState<GameSettings>({ ...DEFAULT_SETTINGS });
@@ -167,7 +129,7 @@ function App() {
 
     const interval = setInterval(() => {
       aiPlayers.forEach(ai => {
-        const actions = aiSystem.updateAI(ai, 1000);
+        aiSystem.updateAI(ai, 1000);
         // Process AI actions (in a full game, this would modify AI state)
       });
     }, 5000);
@@ -203,7 +165,7 @@ function App() {
 
   // Start game with AI
   const startGame = useCallback((difficulty: AIDifficulty) => {
-    const ais = aiSystem.generateUniverse(10);
+    const ais = aiSystem.generateUniverseWithDifficulty(10, difficulty);
     setAiPlayers(ais);
     setGameStarted(true);
     setCurrentPage('overview');
@@ -307,7 +269,7 @@ function App() {
             <StartScreen onStart={startGame} />
           ) : (
             <>
-              {currentPage === 'overview' && <OverviewPage planet={activePlanet} resources={resources} stats={stats} />}
+              {currentPage === 'overview' && <OverviewPage planet={activePlanet} stats={stats} />}
               {currentPage === 'buildings' && <BuildingsPage resources={resources} planet={activePlanet} onBuild={buildUpgrade} />}
               {currentPage === 'fleet' && <FleetPage resources={resources} />}
               {currentPage === 'defense' && <DefensePage resources={resources} />}
@@ -409,7 +371,7 @@ function PlanetCard({ planet, isActive, onClick }: { planet: Planet; isActive: b
 }
 
 // Page Components
-function OverviewPage({ planet, resources, stats }: { planet: Planet; resources: Resources; stats: PlayerStats }) {
+function OverviewPage({ planet, stats }: { planet: Planet; stats: PlayerStats }) {
   return (
     <div className="panel fade-in">
       <div className="panel-header"><span>🏠</span> Planet Overview</div>
@@ -482,7 +444,7 @@ function BuildingsPage({ resources, planet, onBuild }: { resources: Resources; p
   );
 }
 
-function FleetPage({ resources }: { resources: Resources }) {
+function FleetPage({ resources: _resources }: { resources: Resources }) {
   const ships = [
     { id: 'cargoShip', name: 'Cargo Ship', icon: '🚢', count: 5 },
     { id: 'lightFighter', name: 'Light Fighter', icon: '✈️', count: 10 },
@@ -529,7 +491,7 @@ function FleetPage({ resources }: { resources: Resources }) {
   );
 }
 
-function DefensePage({ resources }: { resources: Resources }) {
+function DefensePage({ resources: _resources }: { resources: Resources }) {
   const defenses = [
     { id: 'rocketLauncher', name: 'Rocket Launcher', icon: '🎯', count: 0 },
     { id: 'lightLaser', name: 'Light Laser', icon: '🔫', count: 0 },
@@ -555,7 +517,7 @@ function DefensePage({ resources }: { resources: Resources }) {
   );
 }
 
-function ResearchPage({ resources }: { resources: Resources }) {
+function ResearchPage({ resources: _resources }: { resources: Resources }) {
   const researches = [
     { id: 'energyTech', name: 'Energy Tech', icon: '⚡', level: 1 },
     { id: 'laserTech', name: 'Laser Tech', icon: '🔫', level: 1 },
